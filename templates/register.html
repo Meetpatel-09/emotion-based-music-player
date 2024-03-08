@@ -34,15 +34,17 @@
 		<div class="right">
 			<h5>Register</h5>
 			<p>Already having an account? <a href="#">Login</a> using your account</p>
-			<div class="inputs">
-				<input type="text" placeholder="user name">
-				<br>
-				<input type="password" placeholder="password">
-				<input type="confirmPassword" placeholder="confirm password">
-			</div>
+			<form action="/register" method="post">
+				<div class="inputs">
+					<input type="text" name="name" placeholder="user name">
+					<br>
+					<input type="password" name="password" placeholder="password">
+					<input type="password" name="confirmPassword" placeholder="confirm password">
+					<br>
+					<button type="submit">Register</button>
+				</div>
+			</form>
 
-			<br>
-			<button>Register</button>
 		</div>
 
 	</div>

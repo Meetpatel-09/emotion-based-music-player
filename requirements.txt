@@ -3,3 +3,9 @@ pip install Flask
 pip install opencv-python
 pip install tensorflow
 pip install deepface
+pip install flask_mysqldb
+pip install flask_bcrypt
+pip install jwt
+pip install sqlalchemy
+pip install mysql
+pip install mysql-connector-python

@@ -1,0 +1,5 @@
+
+pip install Flask
+pip install opencv-python
+pip install tensorflow
+pip install deepface

@@ -2,7 +2,9 @@
 pip install Flask
 pip install opencv-python
 pip install tensorflow
+pip install tensorflow keras
 pip install deepface
+pip install matplotlib
 pip install flask_mysqldb
 pip install flask_bcrypt
 pip install jwt

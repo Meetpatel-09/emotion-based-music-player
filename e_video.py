@@ -1,5 +1,5 @@
 import cv2
-# from deepface import DeepFace
+from deepface import DeepFace
 
 emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral']
 
@@ -14,20 +14,20 @@ while True:
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-#     try:
-#       result = DeepFace.analyze(frame, 
-#                           actions = ['emotion']) 
-#       # print result 
-#       emotion = result[0]['dominant_emotion']
-#       print(emotion)
-#       for (x, y, w, h) in faces:
-#         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-#         cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-#         cv2.imshow('Real-time Emotion Detection', frame)
-#       if cv2.waitKey(1) & 0xFF == ord('q'):
-#         break
-#     except:
-#       print("An exception occurred")
+    try:
+      result = DeepFace.analyze(frame, 
+                          actions = ['emotion']) 
+      # print result 
+      emotion = result[0]['dominant_emotion']
+      print(emotion)
+      for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+        cv2.imshow('Real-time Emotion Detection', frame)
+      if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+    except:
+      print("An exception occurred")
 
 
 cap.release()

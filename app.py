@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, render_template, request, url_for, session
+from flask import Flask, redirect, render_template, request, url_for, session
 from flask_bcrypt import Bcrypt
 from sqlalchemy import create_engine, text
 
@@ -16,16 +16,6 @@ engin = create_engine(connection_string, echo=True)
 
 @app.route("/")
 def home():
-    # with engin.connect() as conn:
-
-    #     result = conn.execute(text(
-    #         "SELECT news.*, reporter_tbl.fname, reporter_tbl.lname FROM news JOIN reporter_tbl ON news.reporter_id = reporter_tbl.reporter_id"))
-    #     news = []
-    #     for row in result.all():
-    #         news.append(row)
-
-    #     print(len(news))
-
     return render_template("home.html", title="Home")
 
 
@@ -70,7 +60,7 @@ def register():
             password = data['password']
             hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
             result = conn.execute(text(query), {
-                "name": data['name'],
+                "name": data['username'],
                 "password": hashed_password,
             })
             conn.commit()

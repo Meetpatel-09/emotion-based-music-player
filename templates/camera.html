@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Take Your Photo</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/camera.css') }}">
+</head>
+<body>
+    <main id="camera">
+        <canvas id="camera--sensor"></canvas>
+        <video id="camera--view" autoplay playsinline></video>
+        <!-- {% if image_name %}
+        <img src="{{ url_for('static', filename='uploads/' + image_name) }}" alt="" id="camera--output">
+        {% endif %} -->
+        <img src="//:0" alt="" id="camera--output">
+        <form id="imageForm" action="/camera" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="imageData" name="imageData">
+            <button type="button" id="camera--trigger">Take a picture</button>
+            <input id="upload" type="submit" value="Upload"/>
+        </form>
+    </main>
+
+    <script>
+        var constraints = { video: { facingMode: "environment" }, audio: false };
+        var track = null;
+        const cameraView = document.querySelector("#camera--view"),
+            cameraOutput = document.querySelector("#camera--output"),
+            cameraSensor = document.querySelector("#camera--sensor"),
+            cameraTrigger = document.querySelector("#camera--trigger");
+
+        function cameraStart() {
+            navigator.mediaDevices
+                .getUserMedia(constraints)
+                .then(function(stream) {
+                    track = stream.getTracks()[0];
+                    cameraView.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.error("Oops. Something is broken.", error);
+                });
+        }
+
+        cameraTrigger.onclick = function() {
+            cameraSensor.width = cameraView.videoWidth;
+            cameraSensor.height = cameraView.videoHeight;
+            cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+            cameraOutput.src = cameraSensor.toDataURL("image/webp");
+            cameraOutput.classList.add("taken");
+
+            // Set the image data to a hidden input field
+            var imageDataInput = document.getElementById('imageData');
+            imageDataInput.value = cameraOutput.src;
+        };
+
+        window.addEventListener("load", cameraStart, false);
+    </script>
+</body>
+</html>

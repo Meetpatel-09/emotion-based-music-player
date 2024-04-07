@@ -16,7 +16,9 @@ app.secret_key = "pyFace"
 bcrypt = Bcrypt(app)
 
 UPLOAD_FOLDER = "static/uploads"
+MUSIC_FOLDER = "static/music"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MUSIC_FOLDER'] = MUSIC_FOLDER
 
 connection_string = "mysql+mysqlconnector://root:1234@localhost/music_player"
 engin = create_engine(connection_string, echo=True)
@@ -119,11 +121,47 @@ def camera():
 
         print(emotion)
 
-        return render_template('camera.html', image_name=image_name, emotion=emotion)            
+        
+
+        return render_template('music_list.html', image_name=image_name, emotion=emotion)           
 
     elif request.method == 'GET':
         return render_template('camera.html')
     else:
         return "Requested Method Not Allowed"
+
+@app.route('/add_music', methods=['POST', 'GET'])
+def add_music():
+    if request.method == 'POST':
+        data = request.form
+        with engin.connect() as conn:
+
+            file = request.files['fileData']
+            
+            if file:
+                filename = file.filename
+                file.save(os.path.join(app.config['MUSIC_FOLDER'], filename))
+
+            query = "INSERT INTO music(title, url, mood, age_group) VALUES (:title, :url, :mood, :age_group)"
+
+            result = conn.execute(text(query), {
+                "title": data['title'],
+                "mood": data['mood'],
+                "url": filename,
+                "age_group": data['age_group']
+            })
+            conn.commit()
+
+            if result.rowcount == 1:
+                return redirect(url_for("login"))
+
+        return render_template("register.html", title="Register")
+
+    elif request.method == 'GET':
+        return render_template('add_music.html')
+    else:
+        return "Requested Method Not Allowed"
+
+
 if __name__ == '__main__':
    app.run(debug=True)

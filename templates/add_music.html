@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Music</title>
+</head>
+<body>
+    
+    <form action="/add_music" method="post" enctype="multipart/form-data">
+
+        <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" placeholder="Title of the song">
+        </div>
+
+        <div>
+            <label for="fileData">Music File</label>
+            <input type="file" name="fileData" id="fileData" placeholder="mp4 file of the song">
+        </div>
+        <div>
+            <label for="mood">Mood</label>
+            <select name="mood" id="mood">
+                <option value="happy" selected>Happy</option>
+                <option value="sad">Sad</option>
+                <option value="fear">Fear</option>
+                <option value="angry">Angry</option>
+            </select>
+        </div>
+        <div>
+            <label for="age_group">Age Group</label>
+            <select name="age_group" id="age_group">
+                <option value="young" selected>Young</option>
+                <option value="old">Old</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+</body>
+</html>
